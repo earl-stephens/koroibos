@@ -3,19 +3,27 @@ module Api
     class AthletesController < ApplicationController
 
       def index
-        render json: athlete_output
+        if params[:age] == nil
+          render json: athlete_output(nil)
+        elsif params[:age] == 'youngest'
+          render json: athlete_output(params[:age])
+        end
       end
 
       private
 
-      def athlete_output
-        olympian_hash = Hash.new
-        olympian_hash["olympians"] = Athlete.all.map do |person|
-          AthleteSerializer.new(person).serialize
+      def athlete_output(age_restriction)
+        if age_restriction == nil
+          olympian_hash = Hash.new
+          olympian_hash["olympians"] = Athlete.all.map do |person|
+            AthleteSerializer.new(person).serialize
+          end
+          olympian_hash
+        elsif age_restriction == 'youngest'
+          [AthleteSerializer.new(Athlete.get_youngest).serialize]
         end
-        olympian_hash
       end
-
+      
     end
   end
 end
