@@ -18,4 +18,9 @@ class Athlete < ApplicationRecord
     number_of_medals.count
   end
 
+  def self.get_youngest
+    youngest = Athlete.order(:age)
+    youngest.first
+  end
+
 end
