@@ -1,53 +1,59 @@
-defaults: &defaults
-  working_directory: ~/repo
-  docker:
-    - image: circleci/ruby:2.4.1-jessie-node
-      environment:
-        BUNDLE_JOBS: 3
-        BUNDLE_RETRY: 3
-        BUNDLE_PATH:  vendor/bundle
-        PGHOST: 127.0.0.1
-        PGUSER: postgres
-        RAILS_ENV: test
-    - image: circleci/postgres:9.4-alpine
-      environment:
-        POSTGRES_USER: postgres
-        POSTGRES_DB: koroibos_test
-        POSTGRES_PASSWORD: ""
-
 version: 2
 jobs:
   build:
-    <<: *defaults
+    parallelism: 1
+    docker:
+      - image: circleci/ruby:2.4.1-jessie-node
+        environment:
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+          PGHOST: 127.0.0.1
+          PGUSER: postgres
+          RAILS_ENV: test
+      - image: circleci/postgres:9.5-alpine
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: koroibos_test
+          POSTGRES_PASSWORD: ""
     steps:
       - checkout
       - run:
-        name: Configure Bundler
-        command: |
-          echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-          source $BASH_ENV
-          gem install bundler
-          bundle install
+          name: Which Bundler?
+          command: bundle -v
+      - restore_cache:
+        keys:
+          - rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
+          - rails-demo-bundle-v2
       - run:
-        name: db setup
-        command: |
-          bundle exec rake db:create
-          bundle exec rake db:migrate
-          bundle exec rake import:olympians
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
       - run:
-        name: rpsec testing
-        command: |
-          mkdir -p /tmp/test-results
-          bundle exec rspec --profile 10 \
-                          --format RspecJunitFormatter \
-                          --out /tmp/test-results/rspec.xml \
-                          --format progress \
-                          $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+          name: Bundle Install
+          command: bundle check || bundle install
+      - save_cache:
+          key: rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+      - run:
+        name: wait for db
+        command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: db setup
+          command: bin/rails db:schema:load --trace
+      - run:
+          name: run rspec
+          command: |
+            bundle exec rspec --profile 10 \
+                              --out test_results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
       - store_test_results:
-          path: /tmp/test-results
-#      - run:
-#          name: precompile assets
-#          command: bundle exec rake assets:precompile
+          path: test_results
+
   deploy:
     docker:
       - image: buildpack-deps:trusty
