@@ -53,6 +53,20 @@ The second endpoint is used to find the youngest olympian.  The user makes a GET
 ]
 ```
 
+The third endpoint is used to find the oldest olympian.  The user makes a GET request to `/api/v1/olympians?age=oldest`.  The response shows the oldest olympian, with that athlete's name, team, age, sport and total medals won.  Below is a sample response:
+
+```
+[
+    {
+        "name": "Julie Brougham",
+        "team": "New Zealand",
+        "age": 62,
+        "sport": "Equestrianism",
+        "total_medals_won": 0
+    }
+]
+```
+
 ## Tech Stack
 
 This application was built using Ruby and Ruby on Rails.  The versions are shown below.

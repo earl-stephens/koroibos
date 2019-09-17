@@ -50,5 +50,15 @@ RSpec.describe Athlete, type: :model do
       results = Athlete.get_youngest
       expect(results).to eq(athlete4)
     end
+
+    it 'get_oldest' do
+      athlete1 = Athlete.create!(name: 'Kermit', age: 21, sex: 'M', height: 30, weight: 5, team: 'USA')
+      athlete2 = Athlete.create!(name: 'Piggy', age: 28, sex: 'F', height: 30, weight: 15, team: 'USA')
+      athlete3 = Athlete.create!(name: 'Fozzy', age: 22, sex: 'M', height: 55, weight: 25, team: 'USA')
+      athlete4 = Athlete.create!(name: 'Gonzo', age: 20, sex: 'M', height: 33, weight: 9, team: 'USA')
+
+      results = Athlete.get_oldest
+      expect(results).to eq(athlete2)
+    end
   end
 end

@@ -23,4 +23,9 @@ class Athlete < ApplicationRecord
     youngest.first
   end
 
+  def self.get_oldest
+    oldest = Athlete.order(:age)
+    oldest.last
+  end
+
 end
