@@ -13,21 +13,25 @@ RSpec.describe 'get all olympians', type: :request do
     event2 = sport2.events.create!(name: 'Axe Throwing', games: '2016')
     event3 = sport3.events.create!(name: 'Marathon', games: '2016')
     ae1 = event1.athlete_events.create!(medals: 'Silver', athlete_id: athlete1.id)
-    ae2 = event2.athlete_events.create!(medals: 'none', athlete_id: athlete2.id)
+    ae2 = event2.athlete_events.create!(medals: 'NA', athlete_id: athlete2.id)
     ae3 = event3.athlete_events.create!(medals: 'Gold', athlete_id: athlete3.id)
-    ae4 = event1.athlete_events.create!(medals: 'none', athlete_id: athlete4.id)
+    ae4 = event1.athlete_events.create!(medals: 'NA', athlete_id: athlete4.id)
 
     get '/api/v1/olympians'
 
     results = JSON.parse(response.body)
-    binding.pry
 
     expect(response).to be_successful
     expect(results).to have_key("olympians")
     expect(results["olympians"][0]).to have_key("name")
+    expect(results["olympians"][0]["name"]).to eq(athlete1.name)
     expect(results["olympians"][0]).to have_key("team")
+    expect(results["olympians"][1]["team"]).to eq(athlete2.team)
     expect(results["olympians"][0]).to have_key("age")
+    expect(results["olympians"][2]["age"]).to eq(athlete3.age)
     expect(results["olympians"][0]).to have_key("sport")
+    expect(results["olympians"][3]["sport"]).to eq(sport1.name)
     expect(results["olympians"][0]).to have_key("total_medals_won")
+    expect(results["olympians"][0]["total_medals_won"]).to eq(1)
   end
 end
