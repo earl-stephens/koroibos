@@ -1,24 +1,33 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Introduction
 
-Things you may want to cover:
+## Initial Setup
 
-* Ruby version
+Clone this repository to your computer.  Once it has been cloned, run `bundle`.  After bundling, run `rake db:{create,migrate}`.  Next, seed the database by running `rake import:olympians`.
 
-* System dependencies
+## Running Tests
 
-* Configuration
+The application was created with RSpec.  To run the test suite, enter `rspec` from the command line.  
 
-* Database creation
+SimpleCov was used for monitoring testing coverage.
 
-* Database initialization
+## How To Use
 
-* How to run the test suite
+## Tech Stack
 
-* Services (job queues, cache servers, search engines, etc.)
+## Schema
 
-* Deployment instructions
+The database consists of four tables: Athletes, AthleteEvents, Events and Sports.  A diagram of the schema is shown below.
 
-* ...
+![schema](schema.png)
+
+## Known Issues
+
+## Core Contributors
+
+This was a solo project created by Earl Stephens: https://github.com/earl-stephens
+
+## How to Contribute
+
+If you would desire to contribute to the project, fork the project from the master branch.  You can then make the changes you think are appropriate and submit a pull request.  Please provide a detailed explanation in the pull request of what the problem or fix is.
