@@ -4,7 +4,6 @@ class Athlete < ApplicationRecord
   has_many :events, through: :athlete_events
 
   def get_sport
-    binding.pry
     result = Athlete.joins(:athlete_events)
                     .joins(events: :sport)
                     .where(id: self.id)
