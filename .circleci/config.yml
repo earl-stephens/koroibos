@@ -22,9 +22,9 @@ jobs:
           name: Which Bundler?
           command: bundle -v
       - restore_cache:
-        keys:
-          - rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
-          - rails-demo-bundle-v2
+          keys:
+            - rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
+            - rails-demo-bundle-v2
       - run:
           name: Configure Bundler
           command: |
