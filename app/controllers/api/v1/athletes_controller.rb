@@ -3,7 +3,7 @@ module Api
     class AthletesController < ApplicationController
 
       def index
-        
+        render json: AthleteSerializer.new(Athlete.all)
       end
 
     end

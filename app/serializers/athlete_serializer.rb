@@ -3,6 +3,7 @@ class AthleteSerializer
   attributes :name, :team, :age
 
   attribute :sport do |object|
+    binding.pry
     object.get_sport
   end
 end
