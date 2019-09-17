@@ -11,4 +11,11 @@ class Athlete < ApplicationRecord
     result.first.name
   end
 
+  def get_medal_count
+    number_of_medals = AthleteEvent.joins(:athlete)
+                                    .where(athletes: {id: self.id})
+                                    .where.not(athlete_events: {medals: 'NA'})
+    number_of_medals.count
+  end
+
 end

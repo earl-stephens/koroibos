@@ -5,6 +5,7 @@ class AthleteSerializer
     @team = athlete.team
     @age = athlete.age
     @sport = athlete.get_sport
+    @total_medals_won = athlete.get_medal_count
   end
 
   def serialize
@@ -13,6 +14,7 @@ class AthleteSerializer
     hash["team"] = @team
     hash["age"] = @age
     hash["sport"] = @sport
+    hash["total_medals_won"] = @total_medals_won
     hash
   end
 
