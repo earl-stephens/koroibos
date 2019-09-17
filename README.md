@@ -2,6 +2,8 @@
 
 ## Introduction
 
+The production app is located at https://stormy-lake-75994.herokuapp.com/
+
 ## Initial Setup
 
 Clone this repository to your computer.  Once it has been cloned, run `bundle`.  After bundling, run `rake db:{create,migrate}`.  Next, seed the database by running `rake import:olympians`.
