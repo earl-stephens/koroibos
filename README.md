@@ -4,7 +4,7 @@
 
 ## Initial Setup
 
-Clone this repository to your computer.  Once it has been cloned, run `bundle`.  After bundling, run `rake db:{create,migrate,seed}`.
+Clone this repository to your computer.  Once it has been cloned, run `bundle`.  After bundling, run `rake db:{create,migrate}`.  Next, seed the database by running `rake import:olympians`.
 
 ## Running Tests
 
@@ -17,6 +17,10 @@ SimpleCov was used for monitoring testing coverage.
 ## Tech Stack
 
 ## Schema
+
+The database consists of four tables: Athletes, AthleteEvents, Events and Sports.  A diagram of the schema is shown below.
+
+![schema](schema.png)
 
 ## Known Issues
 
