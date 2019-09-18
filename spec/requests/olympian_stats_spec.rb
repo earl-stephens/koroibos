@@ -14,13 +14,12 @@ RSpec.describe 'get all olympians', type: :request do
     get '/api/v1/olympian_stats'
 
     results = JSON.parse(response.body)
-
+# binding.pry
     expect(response).to be_successful
     expect(results).to have_key("olympian_stats")
     expect(results["olympian_stats"]).to have_key("total_competing_olympians")
     expect(results["olympian_stats"]["total_competing_olympians"]).to eq(8)
     expect(results["olympian_stats"]).to have_key("average_weight")
-    expect(results["olympian_stats"]["average_weight"]).to eq(46.4)
     expect(results["olympian_stats"]["average_weight"]).to have_key("unit")
     expect(results["olympian_stats"]["average_weight"]["unit"]).to eq("kg")
     expect(results["olympian_stats"]["average_weight"]).to have_key("male_olympians")

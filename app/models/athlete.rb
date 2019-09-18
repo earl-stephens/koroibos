@@ -33,33 +33,26 @@ class Athlete < ApplicationRecord
   end
 
   def self.avg_male_weight
-    number_of_men = self.select(:name)
-                        .distinct
-                        .where(sex: "M")
-                        .where.not(weight: 0)
-                        .count
-                        .to_f
-    total_weight = self.select(:name)
-                        .distinct
-                        .where(sex: "M")
-                        .where.not(weight: 0)
-                        .sum(:weight)
-    (total_weight / number_of_men).round(1)
+    self.where.not(weight: 0)
+        .where(sex: 'M')
+        .average(:weight)
+        .to_f
+        .round(1)
   end
 
   def self.avg_female_weight
-    number_of_women = self.select(:name)
-                        .distinct
-                        .where(sex: "F")
-                        .where.not(weight: 0)
-                        .count
-                        .to_f
-    total_weight = self.select(:name)
-                        .distinct
-                        .where(sex: "F")
-                        .where.not(weight: 0)
-                        .sum(:weight)
-    (total_weight / number_of_women).round(1)
+    self.where.not(weight: 0)
+        .where(sex: 'F')
+        .average(:weight)
+        .to_f
+        .round(1)
+  end
+
+  def self.average_age
+    self.where.not(age: 0)
+        .average(:age)
+        .to_f
+        .round(1)
   end
 
 end

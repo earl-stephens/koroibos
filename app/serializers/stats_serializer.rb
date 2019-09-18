@@ -4,7 +4,7 @@ class StatsSerializer
     @total_competing_olympians = Athlete.total_participants
     @male_olympians = Athlete.avg_male_weight
     @female_olympians = Athlete.avg_female_weight
-    @average_age = Athlete.avg_age
+    @average_age = Athlete.average_age
   end
 
   def serialize
@@ -15,6 +15,7 @@ class StatsSerializer
     avg_weight_hash["unit"] = "kg"
     avg_weight_hash["male_olympians"] = @male_olympians
     avg_weight_hash["female_olympians"] = @female_olympians
+    olympian_stats_hash["average_weight"] = avg_weight_hash
     output_hash["olympian_stats"] = olympian_stats_hash
     output_hash["average_age"] = @average_age
     output_hash
