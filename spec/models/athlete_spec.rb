@@ -60,5 +60,45 @@ RSpec.describe Athlete, type: :model do
       results = Athlete.get_oldest
       expect(results).to eq(athlete2)
     end
+
+    it 'total_participants' do
+      athlete1 = Athlete.create!(name: 'Kermit', age: 21, sex: 'M', height: 30, weight: 5, team: 'USA')
+      athlete2 = Athlete.create!(name: 'Piggy', age: 28, sex: 'F', height: 30, weight: 15, team: 'USA')
+      athlete3 = Athlete.create!(name: 'Fozzy', age: 22, sex: 'M', height: 55, weight: 25, team: 'USA')
+      athlete4 = Athlete.create!(name: 'Gonzo', age: 20, sex: 'M', height: 33, weight: 9, team: 'USA')
+      athlete5 = Athlete.create!(name: 'Animal', age: 20, sex: 'M', height: 33, weight: 19, team: 'USA')
+      athlete6 = Athlete.create!(name: 'Gonzo', age: 20, sex: 'M', height: 33, weight: 9, team: 'USA')
+
+      results = Athlete.total_participants
+      expect(results).to eq(5)
+    end
+
+    it 'avg_male_weight' do
+      athlete1 = Athlete.create!(name: 'Kermit', age: 21, sex: 'M', height: 30, weight: 5, team: 'USA')
+      athlete2 = Athlete.create!(name: 'Piggy', age: 28, sex: 'F', height: 30, weight: 15, team: 'USA')
+      athlete3 = Athlete.create!(name: 'Fozzy', age: 22, sex: 'M', height: 55, weight: 25, team: 'USA')
+      athlete4 = Athlete.create!(name: 'Gonzo', age: 20, sex: 'M', height: 33, weight: 9, team: 'USA')
+      athlete5 = Athlete.create!(name: 'Animal', age: 20, sex: 'M', height: 33, weight: 19, team: 'USA')
+      athlete6 = Athlete.create!(name: 'Beaker', age: 20, sex: 'M', height: 33, weight: 16, team: 'USA')
+      athlete7 = Athlete.create!(name: 'Scooter', age: 20, sex: 'M', height: 33, weight: 0, team: 'USA')
+      athlete8 = Athlete.create!(name: 'Gonzo', age: 20, sex: 'M', height: 33, weight: 9, team: 'USA')
+
+      results = Athlete.avg_male_weight
+      expect(results).to eq(14.8)
+    end
+
+    it 'avg_female_weight' do
+      athlete1 = Athlete.create!(name: 'Kermit', age: 21, sex: 'F', height: 30, weight: 5, team: 'USA')
+      athlete2 = Athlete.create!(name: 'Piggy', age: 28, sex: 'F', height: 30, weight: 15, team: 'USA')
+      athlete3 = Athlete.create!(name: 'Fozzy', age: 22, sex: 'F', height: 55, weight: 25, team: 'USA')
+      athlete4 = Athlete.create!(name: 'Gonzo', age: 20, sex: 'F', height: 33, weight: 9, team: 'USA')
+      athlete5 = Athlete.create!(name: 'Animal', age: 20, sex: 'M', height: 33, weight: 19, team: 'USA')
+      athlete6 = Athlete.create!(name: 'Beaker', age: 20, sex: 'M', height: 33, weight: 16, team: 'USA')
+      athlete7 = Athlete.create!(name: 'Scooter', age: 20, sex: 'F', height: 33, weight: 0, team: 'USA')
+      athlete8 = Athlete.create!(name: 'Gonzo', age: 20, sex: 'F', height: 33, weight: 9, team: 'USA')
+
+      results = Athlete.avg_female_weight
+      expect(results).to eq(13.5)
+    end
   end
 end

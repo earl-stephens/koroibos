@@ -15,7 +15,6 @@ class StatsSerializer
     avg_weight_hash["unit"] = "kg"
     avg_weight_hash["male_olympians"] = @male_olympians
     avg_weight_hash["female_olympians"] = @female_olympians
-    # olympian_stats_hash["average_weight"] = avg_weight_hash
     output_hash["olympian_stats"] = olympian_stats_hash
     output_hash["average_age"] = @average_age
     output_hash
