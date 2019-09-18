@@ -28,4 +28,31 @@ class Athlete < ApplicationRecord
     oldest.last
   end
 
+  def self.total_participants
+    self.select("DISTINCT name").count
+  end
+
+  def self.avg_male_weight
+    self.where.not(weight: 0)
+        .where(sex: 'M')
+        .average(:weight)
+        .to_f
+        .round(1)
+  end
+
+  def self.avg_female_weight
+    self.where.not(weight: 0)
+        .where(sex: 'F')
+        .average(:weight)
+        .to_f
+        .round(1)
+  end
+
+  def self.average_age
+    self.where.not(age: 0)
+        .average(:age)
+        .to_f
+        .round(1)
+  end
+
 end
